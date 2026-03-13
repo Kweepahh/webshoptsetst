@@ -15,6 +15,9 @@ public class ZaalSchoen {
     private String name;
 
     @NotNull
+    private double price
+
+    @NotNull
     private String description;
 
     @NotNull
