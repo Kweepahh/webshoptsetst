@@ -30,7 +30,7 @@ public class ZaalSchoenDAO {
     public void createZaalschoen(ZaalSchoenDTO zaalSchoenDTO){
         Optional<Category> category = this.categoryRepository.findById(zaalSchoenDTO.categoryId);
         if (category.isPresent()){
-            ZaalSchoen zaalSchoen = new ZaalSchoen(zaalSchoenDTO.name, zaalSchoenDTO.description, category.get());
+            ZaalSchoen zaalSchoen = new ZaalSchoen(zaalSchoenDTO.name, zaalSchoenDTO.description, category.get(), zaalSchoenDTO.price, zaalSchoenDTO.merk);
             this.repository.save(zaalSchoen);
             return;
         }

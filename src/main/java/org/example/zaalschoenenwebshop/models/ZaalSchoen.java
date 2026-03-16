@@ -15,7 +15,7 @@ public class ZaalSchoen {
     private String name;
 
     @NotNull
-    private double price
+    private double price;
 
     @NotNull
     private String description;
@@ -30,14 +30,15 @@ public class ZaalSchoen {
     public ZaalSchoen() {
     }
 
-    public ZaalSchoen(String name, String description, Category category, String merk) {
+    public ZaalSchoen(String name, String description, Category category, String merk, double price) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.merk = merk;
+        this.price =price;
     }
 
-    public ZaalSchoen(String name, String description, Category category) {
+    public ZaalSchoen(String name, String description, Category category, double price, String merk) {
     }
 
 
@@ -79,5 +80,13 @@ public class ZaalSchoen {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

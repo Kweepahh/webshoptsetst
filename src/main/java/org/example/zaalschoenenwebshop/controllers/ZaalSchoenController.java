@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/zaalschoenen")
 public class ZaalSchoenController {
@@ -20,9 +20,14 @@ public class ZaalSchoenController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ZaalSchoen>> getAllZaalSchoenen(){
+    public ResponseEntity<List<ZaalSchoenDTO>> getAllZaalSchoenen(){
 
-        return ResponseEntity.ok(this.zaalSchoenDAO.getAllZaalSchoenen());
+        List<ZaalSchoenDTO> schoenen = zaalSchoenDAO.getAllZaalSchoenen()
+                .stream()
+                .map(this::toDTO)
+                .toList();
+
+        return ResponseEntity.ok(schoenen);
     }
 
     @PostMapping
@@ -58,4 +63,15 @@ public class ZaalSchoenController {
 
         return ResponseEntity.ok("Schoen deleted with id " + id);
     }
+
+    private ZaalSchoenDTO toDTO(ZaalSchoen schoen) {
+        return new ZaalSchoenDTO(
+                schoen.getName(),
+                schoen.getDescription(),
+                schoen.getCategory().getId(),
+                schoen.getPrice(),
+                schoen.getMerk()
+        );
+    }
 }
+

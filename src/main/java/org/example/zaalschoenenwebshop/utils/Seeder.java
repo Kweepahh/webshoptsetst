@@ -29,6 +29,8 @@ public class Seeder {
         Category basketbalSchoenen = new Category("Basketbal Schoenen");
         this.categoryRepository.save(basketbalSchoenen);
 
-        this.zaalSchoenRepository.save(new ZaalSchoen("Gel-court Hunter 3", "Zaalschoen", basketbalSchoenen, "Mizuno"));
+        this.zaalSchoenRepository.save(new ZaalSchoen("Gel-court Hunter 3", "Zaalschoen", basketbalSchoenen, "Mizuno", 149.99));
+        this.zaalSchoenRepository.save(new ZaalSchoen("Wave Momentum 3", "ZaalSchoen", basketbalSchoenen, "Mizuno", 85.00));
+        this.zaalSchoenRepository.save(new ZaalSchoen("Wave Luminmous 3", "Zaalschoen", basketbalSchoenen, "Mizuno", 105.00));
     }
 }
