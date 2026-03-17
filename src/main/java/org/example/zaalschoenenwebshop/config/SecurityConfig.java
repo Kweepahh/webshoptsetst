@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/zaalschoenen/**").permitAll()
                         .requestMatchers("/error").anonymous()
                         .anyRequest().authenticated()
                 )
