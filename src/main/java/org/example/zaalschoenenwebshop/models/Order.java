@@ -1,15 +1,15 @@
 package org.example.zaalschoenenwebshop.models;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name = "orders")
+@Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
@@ -25,20 +25,8 @@ public class Order {
 
     public Order() {}
 
-    public Order(double totalPrice, LocalDateTime orderDate, CustomUser user, long id, List<OrderItem> orderItems) {
-        this.totalPrice = totalPrice;
-        this.orderDate = orderDate;
-        this.user = user;
-        this.id = id;
-        this.orderItems = orderItems;
-    }
-
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public CustomUser getUser() {

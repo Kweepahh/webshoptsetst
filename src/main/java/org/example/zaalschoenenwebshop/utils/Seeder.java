@@ -4,16 +4,15 @@ import org.example.zaalschoenenwebshop.dao.CategoryRepository;
 import org.example.zaalschoenenwebshop.dao.OrderRepository;
 import org.example.zaalschoenenwebshop.dao.UserRepository;
 import org.example.zaalschoenenwebshop.dao.ZaalSchoenRepository;
-import org.example.zaalschoenenwebshop.models.Category;
-import org.example.zaalschoenenwebshop.models.CustomUser;
-import org.example.zaalschoenenwebshop.models.Order;
-import org.example.zaalschoenenwebshop.models.ZaalSchoen;
+import org.example.zaalschoenenwebshop.models.*;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class Seeder {
@@ -24,13 +23,11 @@ public class Seeder {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
 
-    public Seeder(
-            ZaalSchoenRepository zaalSchoenRepository,
-            CategoryRepository categoryRepository,
-            UserRepository userRepository,
-            OrderRepository orderRepository,
-            PasswordEncoder passwordEncoder
-    ) {
+    public Seeder(ZaalSchoenRepository zaalSchoenRepository,
+                  CategoryRepository categoryRepository,
+                  UserRepository userRepository,
+                  OrderRepository orderRepository,
+                  PasswordEncoder passwordEncoder) {
         this.zaalSchoenRepository = zaalSchoenRepository;
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
@@ -39,14 +36,13 @@ public class Seeder {
     }
 
     @EventListener
-    public void seed(ContextRefreshedEvent event){
-        this.seedZaalSchoenen();
-        this.seedUsers();
-        this.seedOrder();
+    public void seed(ContextRefreshedEvent event) {
+        seedZaalSchoenen();
+        seedUsers();
+        seedOrder();
     }
 
-    private void seedZaalSchoenen(){
-
+    private void seedZaalSchoenen() {
         Category basketbalSchoenen = new Category("Basketbal Schoenen");
         categoryRepository.save(basketbalSchoenen);
 
@@ -56,8 +52,7 @@ public class Seeder {
         zaalSchoenRepository.save(new ZaalSchoen("Hyperice Hyperboot", "HyperIce", basketbalSchoenen, "Nike", 749.99));
     }
 
-    private void seedUsers(){
-
+    private void seedUsers() {
         CustomUser user = new CustomUser(
                 "test14321@gmail.com",
                 passwordEncoder.encode("Test123.")
@@ -66,17 +61,60 @@ public class Seeder {
         userRepository.save(user);
     }
 
-    private void seedOrder(){
+    private void seedOrder() {
 
         CustomUser user = userRepository.findByEmail("test14321@gmail.com");
+        if (user == null) return;
 
-        if(user == null) return;
+        List<ZaalSchoen> products = zaalSchoenRepository.findAll();
 
-        Order order = new Order();
-        order.setUser(user);
-        order.setOrderDate(LocalDateTime.now());
-        order.setTotalPrice(149.99);
+        ZaalSchoen p1 = products.get(0);
+        ZaalSchoen p2 = products.get(1);
+        ZaalSchoen p3 = products.get(2);
 
-        orderRepository.save(order);
+        Order order1 = new Order();
+        order1.setUser(user);
+        order1.setOrderDate(LocalDateTime.now());
+
+        OrderItem item1 = new OrderItem();
+        item1.setOrder(order1);
+        item1.setProduct(p1);
+        item1.setQuantity(2);
+        item1.setPrice(p1.getPrice());
+
+        List<OrderItem> items1 = List.of(item1);
+
+        order1.setOrderItems(items1);
+        order1.setTotalPrice(item1.getPrice() * item1.getQuantity());
+
+        orderRepository.save(order1);
+
+
+
+        Order order2 = new Order();
+        order2.setUser(user);
+        order2.setOrderDate(LocalDateTime.now());
+
+        OrderItem item2 = new OrderItem();
+        item2.setOrder(order2);
+        item2.setProduct(p2);
+        item2.setQuantity(1);
+        item2.setPrice(p2.getPrice());
+
+        OrderItem item3 = new OrderItem();
+        item3.setOrder(order2);
+        item3.setProduct(p3);
+        item3.setQuantity(3);
+        item3.setPrice(p3.getPrice());
+
+        List<OrderItem> items2 = List.of(item2, item3);
+
+        order2.setOrderItems(items2);
+        order2.setTotalPrice(
+                (item2.getPrice() * item2.getQuantity()) +
+                        (item3.getPrice() * item3.getQuantity())
+        );
+
+        orderRepository.save(order2);
     }
 }

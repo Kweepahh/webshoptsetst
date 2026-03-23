@@ -1,8 +1,6 @@
 package org.example.zaalschoenenwebshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.example.zaalschoenenwebshop.models.CustomUser;
-import org.example.zaalschoenenwebshop.models.OrderItem;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,14 +14,14 @@ public class OrderDTO {
     public LocalDateTime orderDate;
 
     @JsonProperty("user_id")
-    public CustomUser userId;
+    public Long userId;
 
     @JsonProperty("order_price")
     public Double orderPrice;
 
-    public List<OrderItem> items;
+    public List<OrderItemDTO> items;
 
-    public OrderDTO(long id, LocalDateTime orderDate, CustomUser userId, Double orderPrice, List<OrderItem> items) {
+    public OrderDTO(long id, LocalDateTime orderDate, Long userId, Double orderPrice, List<OrderItemDTO> items) {
         this.id = id;
         this.orderDate = orderDate;
         this.userId = userId;

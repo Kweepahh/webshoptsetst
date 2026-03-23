@@ -31,7 +31,7 @@ public class OrderItem {
         this.price = price;
     }
 
-    public Long getOrderItemId() {
+    public long getOrderItemId() {
         return orderItemId;
     }
 
@@ -49,5 +49,21 @@ public class OrderItem {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setProduct(ZaalSchoen product) {
+        this.product = product;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

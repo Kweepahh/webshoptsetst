@@ -1,8 +1,6 @@
 package org.example.zaalschoenenwebshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.example.zaalschoenenwebshop.models.Order;
-import org.example.zaalschoenenwebshop.models.ZaalSchoen;
 
 public class OrderItemDTO {
 
@@ -10,10 +8,10 @@ public class OrderItemDTO {
     public long orderItemId;
 
     @JsonProperty("order_id")
-    public Order order;
+    public Long orderId;
 
-    @JsonProperty("item_product")
-    public ZaalSchoen product;
+    @JsonProperty("product_name")
+    public String productName;
 
     @JsonProperty("item_quantity")
     public int quantity;
@@ -21,11 +19,11 @@ public class OrderItemDTO {
     @JsonProperty("item_price")
     public double price;
 
-    public OrderItemDTO(double price, int quantity, ZaalSchoen product, Order order, long orderItemId) {
-        this.price = price;
-        this.quantity = quantity;
-        this.product = product;
-        this.order = order;
+    public OrderItemDTO(long orderItemId, Long orderId, String productName, int quantity, double price) {
         this.orderItemId = orderItemId;
+        this.orderId = orderId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
     }
 }

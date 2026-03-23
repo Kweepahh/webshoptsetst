@@ -1,17 +1,12 @@
 package org.example.zaalschoenenwebshop.controllers;
 
-
 import org.example.zaalschoenenwebshop.dao.OrderDAO;
 import org.example.zaalschoenenwebshop.dto.OrderDTO;
-import org.example.zaalschoenenwebshop.dto.ZaalSchoenDTO;
+import org.example.zaalschoenenwebshop.dto.OrderItemDTO;
 import org.example.zaalschoenenwebshop.models.Order;
-import org.example.zaalschoenenwebshop.models.ZaalSchoen;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
+import org.example.zaalschoenenwebshop.models.OrderItem;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,23 +24,38 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
 
-        List<OrderDTO> order = orderDAO.getAllOrders()
+        List<OrderDTO> orders = orderDAO.getAllOrders()
                 .stream()
                 .map(this::toDTO)
                 .toList();
 
-        return ResponseEntity.ok(order);
-
+        return ResponseEntity.ok(orders);
     }
 
-
     private OrderDTO toDTO(Order order) {
+
+        List<OrderItemDTO> items = order.getOrderItems()
+                .stream()
+                .map(this::toItemDTO)
+                .toList();
+
         return new OrderDTO(
                 order.getId(),
                 order.getOrderDate(),
-                order.getUser(),
+                order.getUser().getId(),
                 order.getTotalPrice(),
-                order.getOrderItems()
+                items
+        );
+    }
+
+    private OrderItemDTO toItemDTO(OrderItem item) {
+
+        return new OrderItemDTO(
+                item.getOrderItemId(),
+                item.getOrder().getId(),
+                item.getProduct().getName(),
+                item.getQuantity(),
+                item.getPrice()
         );
     }
 }
