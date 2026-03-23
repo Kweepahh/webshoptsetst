@@ -1,8 +1,11 @@
 package org.example.zaalschoenenwebshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.example.zaalschoenenwebshop.models.CustomUser;
+import org.example.zaalschoenenwebshop.models.OrderItem;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class OrderDTO {
 
@@ -10,13 +13,21 @@ public class OrderDTO {
     public long id;
 
     @JsonProperty("order_date")
-    public LocalDate orderDate;
+    public LocalDateTime orderDate;
 
     @JsonProperty("user_id")
-    public long userId;
+    public CustomUser userId;
 
     @JsonProperty("order_price")
-    public long orderPrice;
+    public Double orderPrice;
 
-    public List<OrderItemDTO> items;
+    public List<OrderItem> items;
+
+    public OrderDTO(long id, LocalDateTime orderDate, CustomUser userId, Double orderPrice, List<OrderItem> items) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.userId = userId;
+        this.orderPrice = orderPrice;
+        this.items = items;
+    }
 }
