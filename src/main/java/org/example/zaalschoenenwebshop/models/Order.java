@@ -10,7 +10,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -23,9 +23,11 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
+    private String orderAdress;
+
     public Order() {}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -55,6 +57,18 @@ public class Order {
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOrderAdress() {
+        return orderAdress;
+    }
+
+    public void setOrderAdress(String orderAdress) {
+        this.orderAdress = orderAdress;
     }
 
     public void setOrderItems(List<OrderItem> orderItems) {

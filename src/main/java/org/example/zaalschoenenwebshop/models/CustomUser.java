@@ -14,11 +14,18 @@ public class CustomUser {
 
     private String email;
     private String password;
+    private boolean isAdmin;
 
     public CustomUser() {
     }
 
-    public CustomUser(String email, String password) {
+    public CustomUser(String email, String password, boolean isAdmin) {
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public CustomUser(String email, String password){
         this.email = email;
         this.password = password;
     }
@@ -47,4 +54,11 @@ public class CustomUser {
         this.password = password;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 }

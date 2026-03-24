@@ -53,11 +53,18 @@ public class Seeder {
     }
 
     private void seedUsers() {
-        CustomUser user = new CustomUser(
-                "test14321@gmail.com",
-                passwordEncoder.encode("Test123.")
+        CustomUser adminUser = new CustomUser(
+                "admin@gmail.com",
+                passwordEncoder.encode("Test123."),
+                true
         );
 
+        userRepository.save(adminUser);
+
+        CustomUser user = new CustomUser(
+                "nonadmin@gmail.com",
+                passwordEncoder.encode("Test123.")
+        );
         userRepository.save(user);
     }
 
@@ -75,6 +82,7 @@ public class Seeder {
         Order order1 = new Order();
         order1.setUser(user);
         order1.setOrderDate(LocalDateTime.now());
+        order1.setOrderAdress("lksadjflaksgj");
 
         OrderItem item1 = new OrderItem();
         item1.setOrder(order1);
@@ -94,6 +102,7 @@ public class Seeder {
         Order order2 = new Order();
         order2.setUser(user);
         order2.setOrderDate(LocalDateTime.now());
+        order2.setOrderAdress("dflagsg");
 
         OrderItem item2 = new OrderItem();
         item2.setOrder(order2);

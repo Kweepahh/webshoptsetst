@@ -3,6 +3,7 @@ package org.example.zaalschoenenwebshop.controllers;
 import org.example.zaalschoenenwebshop.dao.OrderDAO;
 import org.example.zaalschoenenwebshop.dto.OrderDTO;
 import org.example.zaalschoenenwebshop.dto.OrderItemDTO;
+import org.example.zaalschoenenwebshop.dto.OrderResponse;
 import org.example.zaalschoenenwebshop.models.Order;
 import org.example.zaalschoenenwebshop.models.OrderItem;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
 
-    private OrderDAO orderDAO;
+    private final OrderDAO orderDAO;
 
     public OrderController(OrderDAO orderDAO) {
         this.orderDAO = orderDAO;
@@ -32,6 +33,15 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @PostMapping
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderDTO dto) {
+        orderDAO.createOrder(dto);
+
+        OrderResponse response = new OrderResponse("Order created", "success");
+
+        return ResponseEntity.ok(response);
+    }
+
     private OrderDTO toDTO(Order order) {
 
         List<OrderItemDTO> items = order.getOrderItems()
@@ -44,7 +54,8 @@ public class OrderController {
                 order.getOrderDate(),
                 order.getUser().getId(),
                 order.getTotalPrice(),
-                items
+                items,
+                order.getOrderAdress()
         );
     }
 
