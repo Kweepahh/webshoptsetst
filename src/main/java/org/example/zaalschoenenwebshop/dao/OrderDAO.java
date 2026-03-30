@@ -70,4 +70,13 @@ public class OrderDAO {
 
         orderRepository.save(order);
     }
+
+    public List<Order> getOrdersByEmail(String email) {
+
+        CustomUser user = userRepository.findByEmail(email);
+
+        return orderRepository.findByUserId(user.getId());
+    }
+
+
 }

@@ -11,7 +11,7 @@ public class ZaalSchoenDTO {
     public String description;
 
     @JsonProperty("category_id")
-    public long categoryId;
+    public Long categoryId;
 
     @JsonProperty("product_price")
     public double price;
@@ -19,7 +19,10 @@ public class ZaalSchoenDTO {
     @JsonProperty("merk")
     public String merk;
 
-    public ZaalSchoenDTO(String name, String description, long categoryId, double price, String merk) {
+    public Long id;
+
+    public ZaalSchoenDTO(Long id, String name, String description, Long categoryId, double price, String merk) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.categoryId = categoryId;

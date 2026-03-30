@@ -46,10 +46,10 @@ public class Seeder {
         Category basketbalSchoenen = new Category("Basketbal Schoenen");
         categoryRepository.save(basketbalSchoenen);
 
-        zaalSchoenRepository.save(new ZaalSchoen("Gel-court Hunter 3", "Zaalschoen", basketbalSchoenen, "Mizuno", 149.99));
-        zaalSchoenRepository.save(new ZaalSchoen("Wave Momentum 3", "Zaalschoen", basketbalSchoenen, "Mizuno", 85.00));
-        zaalSchoenRepository.save(new ZaalSchoen("Wave Luminous 3", "Zaalschoen", basketbalSchoenen, "Mizuno", 105.00));
-        zaalSchoenRepository.save(new ZaalSchoen("Hyperice Hyperboot", "HyperIce", basketbalSchoenen, "Nike", 749.99));
+        zaalSchoenRepository.save(new ZaalSchoen("Gel-court Hunter 3", "Zaalschoen", basketbalSchoenen, 149.99, "Mizuno"));
+        zaalSchoenRepository.save(new ZaalSchoen("Wave Momentum 3", "Zaalschoen", basketbalSchoenen, 85.00, "Mizuno"));
+        zaalSchoenRepository.save(new ZaalSchoen("Wave Luminous 3", "Zaalschoen", basketbalSchoenen, 105.00, "Mizuno"));
+        zaalSchoenRepository.save(new ZaalSchoen("Hyperice Hyperboot", "HyperIce", basketbalSchoenen, 749.99, "Nike"));
     }
 
     private void seedUsers() {
@@ -70,7 +70,7 @@ public class Seeder {
 
     private void seedOrder() {
 
-        CustomUser user = userRepository.findByEmail("test14321@gmail.com");
+        CustomUser user = userRepository.findByEmail("admin@gmail.com");
         if (user == null) return;
 
         List<ZaalSchoen> products = zaalSchoenRepository.findAll();

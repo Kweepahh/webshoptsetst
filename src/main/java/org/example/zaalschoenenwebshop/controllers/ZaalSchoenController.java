@@ -30,17 +30,25 @@ public class ZaalSchoenController {
         return ResponseEntity.ok(schoenen);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ZaalSchoenDTO> getZaalSchoenById(@PathVariable Long id){
+        ZaalSchoen schoen = zaalSchoenDAO.getZaalSchoenById(id);
+        if (schoen == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(toDTO(schoen));
+    }
+
     @PostMapping
     public ResponseEntity<String> createZaalSchoen(@RequestBody ZaalSchoenDTO zaalSchoenDTO){
         this.zaalSchoenDAO.createZaalschoen(zaalSchoenDTO);
-        return ResponseEntity.ok("Created a Schoen");
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateZaalSchoen(@PathVariable Long id, @RequestBody ZaalSchoenDTO zaalSchoenDTO){
+    public ResponseEntity<Void> updateZaalSchoen(@PathVariable Long id, @RequestBody ZaalSchoenDTO zaalSchoenDTO){
         this.zaalSchoenDAO.updateZaalschoen(zaalSchoenDTO, id);
-
-        return ResponseEntity.ok("Updated Schoen with id" + id);
+        return ResponseEntity.ok().build();
     }
 
     //@PutMapping("check/{id}")
@@ -65,10 +73,18 @@ public class ZaalSchoenController {
     }
 
     private ZaalSchoenDTO toDTO(ZaalSchoen schoen) {
+
+        Long categoryId = null;
+
+        if (schoen.getCategory() != null) {
+            categoryId = schoen.getCategory().getId();
+        }
+
         return new ZaalSchoenDTO(
+                schoen.getId(),
                 schoen.getName(),
                 schoen.getDescription(),
-                schoen.getCategory().getId(),
+                categoryId,
                 schoen.getPrice(),
                 schoen.getMerk()
         );

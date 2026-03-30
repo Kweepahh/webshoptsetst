@@ -7,6 +7,7 @@ import org.example.zaalschoenenwebshop.dto.OrderResponse;
 import org.example.zaalschoenenwebshop.models.Order;
 import org.example.zaalschoenenwebshop.models.OrderItem;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,20 @@ public class OrderController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/my-orders")
+    public ResponseEntity<List<OrderDTO>> getMyOrders(Authentication authentication) {
+
+        String email = authentication.getName();
+
+        List<OrderDTO> orders = orderDAO.getOrdersByEmail(email)
+                .stream()
+                .map(this::toDTO)
+                .toList();
+
+        return ResponseEntity.ok(orders);
+    }
+
 
     private OrderDTO toDTO(Order order) {
 

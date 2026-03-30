@@ -1,14 +1,14 @@
 package org.example.zaalschoenenwebshop.models;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 public class ZaalSchoen {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull
@@ -30,17 +30,13 @@ public class ZaalSchoen {
     public ZaalSchoen() {
     }
 
-    public ZaalSchoen(String name, String description, Category category, String merk, double price) {
+    public ZaalSchoen(String name, String description, Category category, double price, String merk) {
         this.name = name;
         this.description = description;
         this.category = category;
+        this.price = price;
         this.merk = merk;
-        this.price =price;
     }
-
-    public ZaalSchoen(String name, String description, Category category, double price, String merk) {
-    }
-
 
     public String getMerk() {
         return merk;
